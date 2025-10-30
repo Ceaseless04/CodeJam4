@@ -1,7 +1,8 @@
 import fs from 'fs';
+import stringWidth from 'string-width';
 
 export function getText(){
-    const data = JSON.parse(fs.readFileSync('../paragraphs.json', 'utf-8'));
+    const data = JSON.parse(fs.readFileSync('paragraphs.json', 'utf-8'));
     const randomParagraph = data[Math.floor(Math.random() * data.length)];
 
     return randomParagraph;
@@ -60,6 +61,10 @@ export function calcAccuracy(inputs, correctInputs){
     return (100 * (correctInputs/ inputs)).toFixed(2);
 }
 
+export function calcCompletion(userText, displayText){
+    return Math.floor(100 * (userText.length/displayText.length));
+}
+
 // dummy functionality for car movement
 export function overlayCarOnRoad(road, car, position) {
   // clone road
@@ -84,8 +89,23 @@ export function overlayCarOnRoad(road, car, position) {
   return result.map(lineArr => lineArr.join('')).join('\n');
 }
 
-// dummy car test
-export const road = fs.readFileSync('../ascii/road.txt', 'utf8').split('\n');
+export function printCar(completion) {
+    const data = fs.readFileSync('ascii/car.txt', 'utf-8');
+    const lines = data.split(/\r?\n/);
+    let longestLine = '';
+    lines.forEach(line => {
+    if (line.length > longestLine.length) {
+        longestLine = line;
+    }
+    })
+    const totalWidth = 100;
+    const spaces = Math.floor((totalWidth) * (completion/100));
 
-
-export const car = fs.readFileSync('../ascii/car.txt', 'utf8').split('\n')
+    lines.forEach(line => {
+        const lineWidth = stringWidth(line);
+        const frontSpaces = ' '.repeat(spaces);
+        const backSpaces = ' '.repeat(totalWidth + longestLine.length - lineWidth - spaces);
+        let newLine = frontSpaces + line + backSpaces;
+        process.stdout.write(newLine + "||" + '\n');
+    });
+}
