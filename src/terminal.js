@@ -13,8 +13,3 @@ await prompts({ type: 'text', name: 'ready', message: chalk.blue('Press Enter wh
 
 console.log(chalk.blue("\n Type the following paragraph:\n"));
 console.log(chalk.yellow(`"${original}"\n`));
-
-// Gameloop
-while (shouldEnd) {
-  
-}
