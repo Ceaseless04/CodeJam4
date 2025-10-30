@@ -1,4 +1,3 @@
-import prompts from "prompts";
 import chalk from "chalk";
 import readline from 'readline';
 import {
@@ -8,8 +7,10 @@ import {
   isInputCorrect,
   calcWpm,
   calcAccuracy,
+  overlayCarOnRoad,
+  car,
+  road
 } from './utils.js';
-import {overlayCarOnRoad} from "./utils.js";
 
 // Loading paragraphs
 const displayText = getText();
@@ -54,7 +55,12 @@ process.stdin.on('keypress', (str, key) => {
         console.log(userText);
     }
 
+    // Update car position based on accuracy
+    gameStep(accuracy);
+
     console.clear();
+        console.log(overlayCarOnRoad(road, car, carPosition));
+
     console.log(chalk.blue("\n Type the following paragraph:\n"));
     console.log(chalk.yellow(displayText));
      
@@ -71,21 +77,15 @@ process.stdin.on('keypress', (str, key) => {
 
 
 
-
-console.log(chalk.yellow(`"${original}"\n`));
-
-// dummy car test
-const road = fs.readFileSync('../ascii/road.txt', 'utf8').split('\n');
-
-
-const car = fs.readFileSync('../ascii/car.txt', 'utf8').split('\n')
-
 let carPosition = 0; // Initial position
 
-function gameStep(correct) {
-    if (correct) carPosition += 1;
-    console.clear();
-    console.log(overlayCarOnRoad(road, car, carPosition));
+function gameStep(accuracy) {
+    // if (correct) carPosition += 1;
+    // console.clear();
+    // console.log(overlayCarOnRoad(road, car, carPosition));
+    if (accuracy >= 0.9) {
+      carPosition++;
+    }
 }
 
 // Simulate game steps

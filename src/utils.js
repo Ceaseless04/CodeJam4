@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 export function getText(){
-    const data = JSON.parse(fs.readFileSync('paragraphs.json', 'utf-8'));
+    const data = JSON.parse(fs.readFileSync('../paragraphs.json', 'utf-8'));
     const randomParagraph = data[Math.floor(Math.random() * data.length)];
 
     return randomParagraph;
@@ -85,3 +85,9 @@ export function overlayCarOnRoad(road, car, position) {
   // convert back to string
   return result.map(lineArr => lineArr.join('')).join('\n');
 }
+
+// dummy car test
+export const road = fs.readFileSync('../ascii/road.txt', 'utf8').split('\n');
+
+
+export const car = fs.readFileSync('../ascii/car.txt', 'utf8').split('\n')
