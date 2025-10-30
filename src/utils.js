@@ -57,3 +57,27 @@ function calcWpm(words, timer){
 function calcAccuracy(inputs, correctInputs){
     return correctInputs/ inputs;
 }
+
+// dummy functionality for car movement
+export function overlayCarOnRoad(road, car, position) {
+  // clone road
+  let result = road.map(line => line.split(''));
+
+  // overlay car on the road
+  for (let i = 0; i < result.length; i++) {
+    if (!car[i] || car[i].length === 0) continue;
+    for (let j = 0; j < result[i].length; j++) {
+      let roadRow = i + 6;
+      let roadCol = position + j;
+
+      if (roadRow < result.length && 
+        roadCol < result[roadRow].length && 
+        car[i][j] !== ' ') {
+          result[roadRow][roadCol] = car[i][j];
+      }
+    }
+  }
+
+  // convert back to string
+  return result.map(lineArr => lineArr.join('')).join('\n');
+}
