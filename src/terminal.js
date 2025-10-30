@@ -32,15 +32,17 @@ console.log(chalk.blue("\n Begin typing when ready\n"));
 readline.emitKeypressEvents(process.stdin); 
 process.stdin.setRawMode(true);
 process.stdin.resume();
+process.stdout.write('\x1b[?25l'); //hides the cursor tingy
 
 
-process.stdin.on('keypress', (str, key) => {
-    console.log("HEREE");
-    
+process.stdin.on('keypress', (str, key) => {    
     if (!timer.getSeconds()) timer.start(); // start timer on first keypress
 
     if (key.name == "backspace"){
         userText = userText.slice(0, -1);
+    }
+    else if (key.ctrl && key.name === 'c'){
+        process.exit();
     }
     else{
         userText += str;
@@ -54,7 +56,8 @@ process.stdin.on('keypress', (str, key) => {
     console.clear();
     console.log(chalk.blue("\n Type the following paragraph:\n"));
     console.log(chalk.yellow(displayText));
-    console.log(userText);
+     
+    process.stdout.write(userText + '_');
 
     if(isGameOver(userText, displayText)){
         timer.stop();
@@ -62,7 +65,6 @@ process.stdin.on('keypress', (str, key) => {
         console.log(wpm);
         console.log(accuracy);
         process.exit();
-        return;
     }
 });
 
