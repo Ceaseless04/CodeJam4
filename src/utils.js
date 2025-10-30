@@ -1,17 +1,17 @@
 import fs from 'fs';
 
-function getText(){
+export function getText(){
     const data = JSON.parse(fs.readFileSync('paragraphs.json', 'utf-8'));
     const randomParagraph = data[Math.floor(Math.random() * data.length)];
 
     return randomParagraph;
 }
 
-function isGameOver(userText, displayText){
+export function isGameOver(userText, displayText){
     return userText.length == displayText.length;
 }
 
-function createTimer(){
+export function createTimer(){
     let seconds = 0;
     let interval = null;
     
@@ -39,12 +39,12 @@ function createTimer(){
     return timer;
 }
 
-function isInputCorrect(userText, displayText){
+export function isInputCorrect(userText, displayText){
     const idx = userText.length - 1;
     return userText[idx] === displayText[idx];
 }   
 
-function calcWpm(words, timer){
+export function calcWpm(words, timer){
     const seconds = timer.getSeconds();
     if (seconds <= 10){ //Too early
         return null;
@@ -54,6 +54,10 @@ function calcWpm(words, timer){
     return wpm.toFixed(2);
 }
 
-function calcAccuracy(inputs, correctInputs){
+export function calcAccuracy(inputs, correctInputs){
     return correctInputs/ inputs;
+}
+
+export function acceptInput(){
+
 }
