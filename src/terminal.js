@@ -72,7 +72,7 @@ process.stdin.on('keypress', (str, key) => {
     gameStep(accuracy);
 
     console.clear();
-        console.log(overlayCarOnRoad(road, car, carPosition));
+    console.log(overlayCarOnRoad(road, car, carPosition));
 
     console.log(chalk.blue("\n Type the following paragraph:\n"));
     console.log(chalk.yellow(displayText));
