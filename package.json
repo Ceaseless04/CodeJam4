@@ -1,0 +1,16 @@
+{
+  "name": "codejam4",
+  "version": "1.0.0",
+  "description": "This is a typing speed test CLI Application using JS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "prompts": "^2.4.2"
+  }
+}
