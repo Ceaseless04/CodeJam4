@@ -23,14 +23,14 @@ let accuracy = 0;
 const timer = createTimer();
 
 
-
-console.log(chalk.blue("╔══════════════════════════╗"));
-console.log(chalk.blue("║      Speed Typing Test   ║"));
-console.log(chalk.blue("╚══════════════════════════╝"));
-
-console.log(chalk.blue("\n Type the following paragraph:\n"));
-console.log(chalk.yellow(`"${displayText}"\n`));
-console.log(chalk.blue("\n Begin typing when ready\n"));
+console.clear();
+console.log(chalk.blue("╔═════════════════════════════╗"));
+console.log(chalk.blue("║      Speed Typing Test      ║"));
+console.log(chalk.blue("╚═════════════════════════════╝"));
+console.log("\n");
+console.log(chalk.blue("Type the following paragraph:\n"));
+console.log(chalk.yellow(`${displayText}\n`));
+console.log(chalk.blue("Begin typing when ready:\n"));
 
 readline.emitKeypressEvents(process.stdin); 
 process.stdin.setRawMode(true);
@@ -72,9 +72,8 @@ process.stdin.on('keypress', (str, key) => {
     gameStep(accuracy);
 
     console.clear();
-    console.log(overlayCarOnRoad(road, car, carPosition));
-
     console.log(chalk.blue("\n Type the following paragraph:\n"));
+    console.log(overlayCarOnRoad(road, car, carPosition));
     console.log(chalk.yellow(displayText));
      
     for (const { char, correct } of userText){
