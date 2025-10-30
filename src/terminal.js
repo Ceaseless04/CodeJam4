@@ -5,7 +5,6 @@ import {
   getText,
   isGameOver,
   createTimer,
-  isInputCorrect,
   calcWpm,
   calcAccuracy,
 } from './utils.js';
@@ -13,7 +12,7 @@ import {
 // Loading paragraphs
 const displayText = getText();
 
-let userText = "";
+let userText = [];
 let correctInputs = 0;
 let totalInputs = 0;
 let wpm = 0;
@@ -23,7 +22,9 @@ const timer = createTimer();
 
 
 
-console.log(chalk.blue("Welcome to the Speed Typing Test!"));
+console.log(chalk.blue("╔══════════════════════════╗"));
+console.log(chalk.blue("║      Speed Typing Test   ║"));
+console.log(chalk.blue("╚══════════════════════════╝"));
 
 console.log(chalk.blue("\n Type the following paragraph:\n"));
 console.log(chalk.yellow(`"${displayText}"\n`));
@@ -36,34 +37,60 @@ process.stdout.write('\x1b[?25l'); //hides the cursor tingy
 
 
 process.stdin.on('keypress', (str, key) => {    
-    if (!timer.getSeconds()) timer.start(); // start timer on first keypress
+    if (!timer.getStarted()) timer.start(); // start timer on first keypress
 
-    if (key.name == "backspace"){
+    if (key.name === "backspace"){
         userText = userText.slice(0, -1);
+    }
+    else if (!str) {
+        return;
     }
     else if (key.ctrl && key.name === 'c'){
         process.exit();
     }
+    else if (key.name === "return" || key.name === "enter") {
+        return;
+    }
     else{
-        userText += str;
+        
+        userText.push({ char: str, correct: false });
+        let currentIndex = userText.length - 1;
+
+        let isCorrect = (str === displayText[currentIndex]);
+        userText[currentIndex].correct = isCorrect;
+
         totalInputs++;
-        correctInputs += isInputCorrect(userText, displayText);
-        wpm = calcWpm(userText.split(" ").length, timer);
+        if (isCorrect) correctInputs++;
+
+        wpm = calcWpm(userText, timer);
         accuracy = calcAccuracy(totalInputs, correctInputs);
-        console.log(userText);
     }
 
     console.clear();
     console.log(chalk.blue("\n Type the following paragraph:\n"));
     console.log(chalk.yellow(displayText));
      
-    process.stdout.write(userText + '_');
+    for (const { char, correct } of userText){
+        process.stdout.write(correct ? chalk.green(char) : chalk.red(char));
+    }
+    process.stdout.write("_");
+
+    console.log("\n");
+    console.log("WPM: " + wpm);
+    console.log("Accuracy: " + accuracy + "%");
 
     if(isGameOver(userText, displayText)){
         timer.stop();
+        console.clear();
+        console.log("\n");
+        console.log(chalk.yellow(displayText));
+        for (const { char, correct } of userText){
+            process.stdout.write(correct ? chalk.green(char) : chalk.red(char));
+        }
+        console.log("\n");
         console.log("Game Over")
-        console.log(wpm);
-        console.log(accuracy);
+        console.log("WPM: " + wpm);
+        console.log("Accuracy: " + accuracy + "%");
         process.exit();
     }
 });
