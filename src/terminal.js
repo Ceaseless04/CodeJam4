@@ -1,3 +1,7 @@
+//COMMENT: This is an awesome implementation of type racer using javascript
+//  well done
+//The car is super cute and a great addition to the game
+
 import chalk from "chalk";
 import readline from 'readline';
 import {
@@ -9,6 +13,7 @@ import {
   calcCompletion,
   printCar
 } from './utils.js';
+//COMMENT: Nice and clean addition of utils.js and importing modules
 
 // Loading paragraphs
 const displayText = getText();
@@ -48,6 +53,7 @@ process.stdin.on('keypress', (str, key) => {
     else if (!str) {
         return;
     }
+    //COMMENT: Nice addition of ctrl + c to exit in case you wanna ragequit
     else if (key.ctrl && key.name === 'c'){
         process.exit();
     }
@@ -78,6 +84,7 @@ process.stdin.on('keypress', (str, key) => {
     }
     process.stdout.write("_");
 
+    //COMMENT: love the constantly updating typing stats
     console.log("\n");
     printCar(completion);
     console.log("WPM: " + wpm);
