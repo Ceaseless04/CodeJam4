@@ -12,6 +12,7 @@ export function isGameOver(userText, displayText){
     return userText.length == displayText.length;
 }
 
+//COMMENT: timer is well made and easy to integrate
 export function createTimer(){
     let seconds = 0;
     let interval = null;
@@ -47,6 +48,7 @@ export function createTimer(){
 }
 
 export function calcWpm(userText, timer){
+    //COMMENT: Maybe return 0 instead of null to avoid any errors
     const seconds = timer.getSeconds();
     if (seconds <= 10){ //Too early
         return null;
