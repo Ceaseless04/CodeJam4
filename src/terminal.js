@@ -11,6 +11,8 @@ import {
 } from './utils.js';
 
 // Loading paragraphs
+//You could encapsulate this all in one game state object
+//if you wante to. Something like const gameState = { userText: [], ...}
 const displayText = getText();
 
 let userText = [];
@@ -36,6 +38,7 @@ readline.emitKeypressEvents(process.stdin);
 process.stdin.setRawMode(true);
 process.stdin.resume();
 process.stdout.write('\x1b[?25l'); //hides the cursor tingy
+//Cool logic here, never knew you could do that!
 
 
 process.stdin.on('keypress', (str, key) => {    
@@ -51,6 +54,8 @@ process.stdin.on('keypress', (str, key) => {
     else if (key.ctrl && key.name === 'c'){
         process.exit();
     }
+    //I like how you included this as an escape from the program
+    //Really smart, good thinking.
     else if (key.name === "return" || key.name === "enter") {
         return;
     }
@@ -99,6 +104,9 @@ process.stdin.on('keypress', (str, key) => {
         console.log("Accuracy: " + accuracy + "%");
         process.exit();
     }
+    //All looks good here, I like the use of the functions from utils.js,
+    //Good to seperate function fromg game logic to simplify things.
+    //Overall, looks great.
 });
 
 

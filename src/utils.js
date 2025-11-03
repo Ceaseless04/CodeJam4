@@ -2,14 +2,20 @@ import fs from 'fs';
 import stringWidth from 'string-width';
 
 export function getText(){
+    //Because we're using file reading, you might want to wrap this
+    //inside a try catch block in case the file is missing or corrupted.
+    //try{...} catch (error){//output default text or error message}
     const data = JSON.parse(fs.readFileSync('paragraphs.json', 'utf-8'));
     const randomParagraph = data[Math.floor(Math.random() * data.length)];
 
     return randomParagraph;
 }
 
+//I really like this simple function to get a random paragraph. Makes things easy and random.
+
 export function isGameOver(userText, displayText){
     return userText.length == displayText.length;
+    //Not super important, but use === for comparison
 }
 
 export function createTimer(){
@@ -53,7 +59,9 @@ export function calcWpm(userText, timer){
     }
     const minutes = seconds / 60;
     const words = userText.length / 5;
+    //Why divide by 5 here? Is it because average word length is 5 chars? Might want to add a comment.
     const wpm = words/minutes;
+    //Either way I like this simple method to calc WPM.
     return wpm.toFixed(2);
 }
 
@@ -90,6 +98,8 @@ export function overlayCarOnRoad(road, car, position) {
 }
 
 export function printCar(completion) {
+    //same as before with file reading, might want to wrap in try catch
+    //overall though, functionality looks great
     const data = fs.readFileSync('ascii/car.txt', 'utf-8');
     const lines = data.split(/\r?\n/);
     let longestLine = '';
